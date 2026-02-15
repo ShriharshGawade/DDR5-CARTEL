@@ -1,0 +1,111 @@
+%% NexusArt - Collaborative Creative Ecosystem
+%% Requirements & User Journey Visualization
+
+graph TB
+    Start([User Onboarding]) --> ProfileSetup[Profile Setup & Portfolio Upload]
+    
+    ProfileSetup --> PersonaA[Persona A: Filmmaker]
+    ProfileSetup --> PersonaB[Persona B: Music Producer]
+    ProfileSetup --> PersonaC[Persona C: Scriptwriter]
+    
+    %% Filmmaker Journey
+    PersonaA --> FA1[Upload Video Drafts .mp4]
+    FA1 --> FA2[Define Project Requirements]
+    FA2 --> ModuleA1[Semantic Matchmaking Engine]
+    
+    %% Music Producer Journey
+    PersonaB --> FB1[Upload Audio Stems .wav]
+    FB1 --> FB2[Browse Collaboration Opportunities]
+    FB2 --> ModuleA1
+    
+    %% Scriptwriter Journey
+    PersonaC --> FC1[Input Script/Narrative Ideas]
+    FC1 --> FC2[Request AI Brainstorming]
+    FC2 --> ModuleC1[AI Creative Assistant]
+    
+    %% Module A: Semantic Matchmaking
+    ModuleA1[Module A: Semantic Matchmaking] --> MA1{Vector Embedding Analysis}
+    MA1 --> MA2[Amazon Bedrock Titan Embeddings]
+    MA2 --> MA3[Emotional Tone Analysis]
+    MA2 --> MA4[Skill Complementarity Scoring]
+    MA3 --> MA5[Amazon Neptune Graph Query]
+    MA4 --> MA5
+    MA5 --> MA6[Ranked Match Results]
+    MA6 --> MA7[Collaboration Invitations Sent]
+    
+    %% Module B: Living Workspace
+    MA7 --> ModuleB1[Module B: Living Workspace]
+    ModuleB1 --> MB1[Create Shared Project]
+    MB1 --> MB2[Amazon S3 Versioned Storage]
+    MB2 --> MB3[Upload Media Assets]
+    MB3 --> MB4{Asset Type}
+    MB4 -->|Video| MB5[.mp4 Processing]
+    MB4 -->|Audio| MB6[.wav Processing]
+    MB4 -->|Script| MB7[.fdx/.txt Processing]
+    
+    MB5 --> MB8[DynamoDB Metadata Store]
+    MB6 --> MB8
+    MB7 --> MB8
+    
+    MB8 --> MB9[Git-Style Version Timeline]
+    MB9 --> MB10[Contribution Attribution Ledger]
+    MB10 --> MB11[Transparent Credit Tracking]
+    MB11 --> MB12[Shared Reputation Graph Update]
+    MB12 --> Neptune[(Amazon Neptune)]
+    
+    %% Module C: AI Creative Assistant
+    ModuleC1 --> MC1[Amazon Bedrock Claude 3]
+    MC1 --> MC2[Context-Aware Suggestions]
+    MC2 --> MC3[Regional Language Adaptation]
+    MC3 --> MC4[Hindi/Marathi/Tamil Scripts]
+    
+    MB11 --> ModuleC2[Predictive Intelligence]
+    ModuleC2 --> MC5[Amazon SageMaker Model]
+    MC5 --> MC6[Engagement Forecasting]
+    MC6 --> MC7[Churn Risk Analysis]
+    MC7 --> MC8[Pacing & Topic Fatigue Detection]
+    MC8 --> MC9[Pre-Publish Dashboard]
+    MC9 --> MC10{Approval Decision}
+    
+    MC10 -->|Revise| MB3
+    MC10 -->|Approve| ModuleD1[Module D: Intelligent Distribution]
+    
+    %% Module D: Distribution
+    ModuleD1 --> MD1[AWS Elemental MediaConvert]
+    MD1 --> MD2[Auto-Format 16:9]
+    MD1 --> MD3[Auto-Format 9:16]
+    MD1 --> MD4[Auto-Format 1:1]
+    
+    MD2 --> MD5[Amazon Transcribe]
+    MD3 --> MD5
+    MD4 --> MD5
+    
+    MD5 --> MD6[Amazon Translate]
+    MD6 --> MD7[Multi-Lingual Captions]
+    MD7 --> MD8[Hindi Captions]
+    MD7 --> MD9[Marathi Captions]
+    MD7 --> MD10[Tamil Captions]
+    
+    MD8 --> MD11[Localized Promotional Material]
+    MD9 --> MD11
+    MD10 --> MD11
+    
+    MD11 --> MD12[Final Asset Package]
+    MD12 --> MD13[S3 Distribution Bucket]
+    MD13 --> End([Multi-Platform Publishing])
+    
+    %% KPI Tracking
+    MA6 -.->|KPI 1| KPI1[Discovery Time < 24hrs]
+    MC9 -.->|KPI 2| KPI2[Prediction Accuracy ±15%]
+    MD11 -.->|KPI 3| KPI3[80% Automation of Localization]
+    
+    %% Styling
+    classDef moduleStyle fill:#FF6B6B,stroke:#C92A2A,stroke-width:3px,color:#fff
+    classDef awsService fill:#FF9900,stroke:#EC7211,stroke-width:2px,color:#fff
+    classDef persona fill:#4ECDC4,stroke:#2A9D8F,stroke-width:2px,color:#fff
+    classDef kpi fill:#95E1D3,stroke:#38A3A5,stroke-width:2px,color:#000
+    
+    class ModuleA1,ModuleB1,ModuleC1,ModuleC2,ModuleD1 moduleStyle
+    class MA2,MA5,MB2,MB8,Neptune,MC1,MC5,MD1,MD5,MD6 awsService
+    class PersonaA,PersonaB,PersonaC persona
+    class KPI1,KPI2,KPI3 kpi
