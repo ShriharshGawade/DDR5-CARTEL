@@ -1,0 +1,172 @@
+digraph NexusArt {
+    label="NexusArt - Collaborative Creative Ecosystem\nServerless AWS Architecture";
+    labelloc="t";
+    fontsize=20;
+    fontname="Arial Bold";
+    rankdir=TB;
+    bgcolor="white";
+    pad=0.5;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.2;
+    
+    // Node styling
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=11];
+    
+    // Client Layer
+    subgraph cluster_client {
+        label="Client Layer";
+        style=filled;
+        color=lightblue;
+        fillcolor="#E3F2FD";
+        
+        web [label="React Web App", fillcolor="#4FC3F7", fontcolor=white];
+        mobile [label="React Native\nMobile App", fillcolor="#4FC3F7", fontcolor=white];
+    }
+    
+    // API Gateway Layer
+    subgraph cluster_api {
+        label="API Gateway Layer";
+        style=filled;
+        color=orange;
+        fillcolor="#FFF3E0";
+        
+        apigw [label="Amazon API Gateway\nREST + WebSocket", fillcolor="#FF9800", fontcolor=white];
+        cognito [label="Amazon Cognito\nAuthentication", fillcolor="#FF9800", fontcolor=white];
+    }
+    
+    // Lambda Compute Layer
+    subgraph cluster_compute {
+        label="Compute Layer (Serverless)";
+        style=filled;
+        color=green;
+        fillcolor="#E8F5E9";
+        
+        lambda_embed [label="Lambda:\nembedding-generator", fillcolor="#66BB6A", fontcolor=white];
+        lambda_match [label="Lambda:\nsemantic-matcher", fillcolor="#66BB6A", fontcolor=white];
+        lambda_meta [label="Lambda:\nmetadata-processor", fillcolor="#66BB6A", fontcolor=white];
+        lambda_creative [label="Lambda:\ncreative-assistant", fillcolor="#66BB6A", fontcolor=white];
+        lambda_predict [label="Lambda:\nengagement-predictor", fillcolor="#66BB6A", fontcolor=white];
+        lambda_dist [label="Lambda:\ndistribution-orchestrator", fillcolor="#66BB6A", fontcolor=white];
+    }
+    
+    // Module A: Semantic Matchmaking
+    subgraph cluster_module_a {
+        label="Module A: Semantic Matchmaking Engine";
+        style=filled;
+        color="#FF6B6B";
+        fillcolor="#FFEBEE";
+        
+        bedrock_titan [label="Amazon Bedrock\nTitan Embeddings", fillcolor="#E91E63", fontcolor=white];
+        ddb_profiles [label="DynamoDB:\nUserProfiles", fillcolor="#E91E63", fontcolor=white];
+        ddb_embeddings [label="DynamoDB:\nVectorEmbeddings", fillcolor="#E91E63", fontcolor=white];
+        neptune [label="Amazon Neptune\nGraph Database", fillcolor="#E91E63", fontcolor=white];
+    }
+    
+    // Module B: Living Workspace
+    subgraph cluster_module_b {
+        label="Module B: Living Workspace (Version Control)";
+        style=filled;
+        color="#9C27B0";
+        fillcolor="#F3E5F5";
+        
+        s3_projects [label="Amazon S3\nProjects (Versioned)", fillcolor="#9C27B0", fontcolor=white];
+        ddb_projects [label="DynamoDB:\nProjects", fillcolor="#9C27B0", fontcolor=white];
+        ddb_assets [label="DynamoDB:\nAssets", fillcolor="#9C27B0", fontcolor=white];
+        ddb_ledger [label="DynamoDB:\nContributionLedger", fillcolor="#9C27B0", fontcolor=white];
+    }
+    
+    // Module C: AI/ML Services
+    subgraph cluster_module_c {
+        label="Module C: AI Creative Assistant & Predictive Intelligence";
+        style=filled;
+        color="#2196F3";
+        fillcolor="#E3F2FD";
+        
+        bedrock_claude [label="Amazon Bedrock\nClaude 3", fillcolor="#2196F3", fontcolor=white];
+        sagemaker [label="Amazon SageMaker\nEngagement Predictor", fillcolor="#2196F3", fontcolor=white];
+        rekognition [label="Amazon Rekognition\nContent Moderation", fillcolor="#2196F3", fontcolor=white];
+    }
+    
+    // Module D: Distribution
+    subgraph cluster_module_d {
+        label="Module D: Intelligent Distribution";
+        style=filled;
+        color="#FF5722";
+        fillcolor="#FBE9E7";
+        
+        mediaconvert [label="AWS Elemental\nMediaConvert", fillcolor="#FF5722", fontcolor=white];
+        transcribe [label="Amazon Transcribe\nSpeech-to-Text", fillcolor="#FF5722", fontcolor=white];
+        translate [label="Amazon Translate\nMulti-lingual", fillcolor="#FF5722", fontcolor=white];
+        s3_dist [label="Amazon S3\nDistribution Bucket", fillcolor="#FF5722", fontcolor=white];
+        cloudfront [label="Amazon CloudFront\nCDN", fillcolor="#FF5722", fontcolor=white];
+    }
+    
+    // Monitoring & Events
+    subgraph cluster_monitoring {
+        label="Monitoring & Event Bus";
+        style=filled;
+        color="#607D8B";
+        fillcolor="#ECEFF1";
+        
+        cloudwatch [label="Amazon CloudWatch\nLogs & Metrics", fillcolor="#607D8B", fontcolor=white];
+        eventbridge [label="Amazon EventBridge\nEvent Bus", fillcolor="#607D8B", fontcolor=white];
+    }
+    
+    // Client to API Gateway
+    web -> apigw [label="HTTPS", color="#1976D2", penwidth=2];
+    mobile -> apigw [label="HTTPS", color="#1976D2", penwidth=2];
+    
+    // API Gateway to Auth
+    apigw -> cognito [label="Auth", color="#FF6F00", penwidth=2];
+    
+    // API Gateway to Lambda Functions
+    apigw -> lambda_embed [color="#4CAF50"];
+    apigw -> lambda_match [color="#4CAF50"];
+    apigw -> lambda_creative [color="#4CAF50"];
+    apigw -> lambda_predict [color="#4CAF50"];
+    apigw -> lambda_dist [color="#4CAF50"];
+    apigw -> lambda_meta [color="#4CAF50"];
+    
+    // Module A: Semantic Matchmaking Flow
+    lambda_embed -> bedrock_titan [label="Generate\nEmbeddings", color="#E91E63"];
+    lambda_embed -> ddb_embeddings [label="Store", color="#E91E63"];
+    lambda_embed -> neptune [label="Update\nGraph", color="#E91E63"];
+    lambda_match -> ddb_profiles [label="Query", color="#E91E63"];
+    lambda_match -> ddb_embeddings [label="Search", color="#E91E63"];
+    lambda_match -> neptune [label="Graph\nQuery", color="#E91E63"];
+    
+    // Module B: Living Workspace Flow
+    lambda_meta -> s3_projects [label="Store\nAssets", color="#9C27B0"];
+    lambda_meta -> ddb_projects [label="Update", color="#9C27B0"];
+    lambda_meta -> ddb_assets [label="Track\nVersions", color="#9C27B0"];
+    lambda_meta -> ddb_ledger [label="Record\nContributions", color="#9C27B0"];
+    s3_projects -> eventbridge [label="S3 Event", color="#9C27B0", style=dashed];
+    
+    // Module C: AI Creative Assistant Flow
+    lambda_creative -> bedrock_claude [label="Creative\nSuggestions", color="#2196F3"];
+    lambda_predict -> sagemaker [label="Predict\nEngagement", color="#2196F3"];
+    lambda_meta -> rekognition [label="Content\nModeration", color="#2196F3"];
+    
+    // Module D: Distribution Flow
+    lambda_dist -> mediaconvert [label="Transcode", color="#FF5722"];
+    lambda_dist -> transcribe [label="Generate\nCaptions", color="#FF5722"];
+    lambda_dist -> translate [label="Localize", color="#FF5722"];
+    mediaconvert -> s3_dist [color="#FF5722"];
+    transcribe -> s3_dist [color="#FF5722"];
+    translate -> s3_dist [color="#FF5722"];
+    s3_dist -> cloudfront [label="CDN\nDelivery", color="#FF5722", penwidth=2];
+    
+    // Event-driven architecture
+    eventbridge -> lambda_embed [label="Trigger", color="#607D8B", style=dashed];
+    eventbridge -> lambda_meta [label="Trigger", color="#607D8B", style=dashed];
+    
+    // Monitoring connections
+    lambda_embed -> cloudwatch [style=dotted, color="#607D8B"];
+    lambda_match -> cloudwatch [style=dotted, color="#607D8B"];
+    lambda_meta -> cloudwatch [style=dotted, color="#607D8B"];
+    lambda_creative -> cloudwatch [style=dotted, color="#607D8B"];
+    lambda_predict -> cloudwatch [style=dotted, color="#607D8B"];
+    lambda_dist -> cloudwatch [style=dotted, color="#607D8B"];
+    apigw -> cloudwatch [style=dotted, color="#607D8B"];
+}

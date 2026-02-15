@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "aws-architecture": {
+      "command": "uvx",
+      "args": ["mcp-server-aws-architecture"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
